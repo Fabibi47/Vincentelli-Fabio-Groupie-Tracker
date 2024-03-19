@@ -1,0 +1,30 @@
+{{define "connection"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Connection</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/assets/css/connect.css">
+    </head>
+    <body>
+        {{template "header"}}
+        <form action="/connectHandler" method="post">
+            {{if eq .Err "Not Exists"}}
+                <p class="error">Utilisateur inexistant</p>
+            {{end}}
+            <label for="name">Nom</label>
+            <input type="text" name="username" id="name">
+            {{if eq .Err "Wrong Password"}}
+                <p class="error">Mauvais mot de passe</p>
+            {{end}}
+            <label for="pwd">Mot de passe</label>
+            <input type="password" name="password" id="pwd">
+            <input type="submit">
+        </form>
+        <p>Pas de compte ? <a href="/register">Créer un compte</a></p>
+        {{template "footer"}}
+    </body>
+</html>
+{{end}}

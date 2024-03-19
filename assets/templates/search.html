@@ -1,0 +1,27 @@
+{{define "search"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Recherche</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {{template "header"}}
+            <form action="/result" method="POST">
+                <input type="text" placeholder="Search" id="search" name="search">
+                <label for="track">Tracks</label>
+                <input type="radio" name="filter" value="track" id="track">
+                <label for="album">Albums</label>
+                <input type="radio" name="filter" value="album" id="album">
+                <label for="artists">Artists</label>
+                <input type="radio" name="filter" value="artists" id="artists">
+
+                <input type="submit">
+            </form>
+        {{template "footer"}}
+    </body>
+</html>
+{{end}}

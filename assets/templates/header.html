@@ -1,0 +1,25 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/assets/css/header.css">
+    </head>
+    <body>
+        <a href="/favorites">Vos Favoris</a>
+        <li><a>Catégories</a>
+            <ul>
+                <li><a href="/tracks">Tracks</a></li>
+                <li><a href="/albums">Albums</a></li>
+                <li><a href="/artists">Artistes</a></li>
+            </ul>
+        </li>
+        <h>Reezer</h>
+        {{if eq .Connected true}}
+            <a href="/deconnect">Vous déconnecter</a>
+        {{else}}
+            <a href="/connect">Vous connecter</a>
+        {{end}}
+    </body>
+</html>
+{{end}}

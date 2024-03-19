@@ -1,0 +1,24 @@
+{{define "register"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Register</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/assets/css/register.css">
+    </head>
+    <body>
+        {{template "header"}}
+        <form action="/registerHandler" method="post">
+            {{if eq .Err "alreadyUsed"}}
+                <p class="error">Nom déjà utilisé</p>
+            {{end}}
+            <input type="text" name="username">
+            <input type="password" name="password">
+            <input type="submit">
+        </form>
+        {{template "footer"}}
+    </body>
+</html>
+{{end}}

@@ -1,0 +1,31 @@
+{{define "a_propos"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>A propos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {{template "header"}}
+        <h1>Les Maquettes</h1>
+        <p>J'en ai pas fait car j'avais une bonne idée de ce que je voulais pour le désign du site?</p>
+        <h1>Les Tâches</h1>
+        <p>La première chose que j'ai fait c'a été d'initialiser toutes les routes dans mon main.go.</p>
+        <p>Puis je me suis lancé dans les templates html.</p>
+        <p>Je connaissais déjà l'API Deezer vite fait donc j'ai pas eu à faire de très longues recherches la-dessus.</p>
+        <p>Je me suis donc collé aux fonctions controllant chaque route.</p>
+        <p>J'ai fait un petit json pour stocker les utilisateurs et les favoris.</p>
+        <p>Et enfin je me suis mis au front (en dernier, oui)</p>
+        <h1>Les Difficultés</h1>
+        <p>Ma première difficulté à été que l'API Deezer fournit finalement très peu d'informations au niveau des genres, on trouve une case "genre" dans les albums et c'est tout.</p>
+        <p>Ensuite, le fait d'être tête en l'air. J'ai bien dû passer une après-midi à courrir derrière des noms d'attributs que j'avais mal réécrit dans les templates (un calvaire)</p>
+        <p>Et enfin, le plus dur pour la fin: réussir à me motiver pour faire le front-end.</p>
+        <p>J'avais beau savoir ce que je voulais faire, j'avais une flemme incommensurable.</p>
+        <p>Mais quand faut y aller...</p>
+        {{template "footer"}}
+    </body>
+</html>
+{{end}}

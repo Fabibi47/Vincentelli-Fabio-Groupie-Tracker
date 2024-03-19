@@ -1,0 +1,36 @@
+{{define "favoris"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Vos Favoris</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {{template "header"}}
+        <h1>Sons</h1>
+        {{range .User.FavoriteTracks}}
+            <div>
+                <h3><a href="/track?t={{.Id}}">{{.Title}}</a></h3>
+                <p><a href="/album?a={{.Album.Id}}">{{.Album.Title}}</a></p>
+                <p><a href="/artist?a={{.Artiste.Id}}">{{.Artiste.Name}}</a></p>
+            </div>
+        {{end}}
+        <h1>Albums</h1>
+        {{range .User.FavoriteAlbums}}
+            <div>
+                <h3><a href="/album?a={{.Id}}">{{.Title}}</a></h3>
+            </div>
+        {{end}}
+        <h1>Artistes</h1>
+        {{range .User.FavoriteArtists}}
+            <div>
+                <h3><a href="/artist?a={{.Id}}">{{.Name}}</a></h3>
+            </div>
+        {{end}}
+        {{template "footer"}}
+    </body>
+</html>
+{{end}}

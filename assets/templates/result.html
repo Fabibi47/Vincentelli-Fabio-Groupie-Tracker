@@ -1,0 +1,37 @@
+{{define "result"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Recherche</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {{template "header"}}
+        {{if eq .Filter "artists"}}
+            {{range .Results}}
+                <div>
+                    <h1><a href="/artist?a={{.Id}}">{{.Title}}</a></h1>
+                </div>
+            {{end}}
+        {{else if eq .Filter "album"}}
+            {{range .Results}}
+                <div>
+                    <h1><a href="/album?a={{.Id}}">{{.Title}}</a></h1>
+                </div>
+            {{end}}
+        {{else}}
+            {{range .Results}}
+                <div>
+                    <h1><a href="/track?t={{.Id}}">{{.Title}}</a></h1>
+                    <p>{{.Artist.Name}}</p>
+                    <p>{{.Album.Title}}</p>
+                </div>
+            {{end}}
+        {{end}}
+        {{template "footer"}}
+    </body>
+</html>
+{{end}}
