@@ -1,4 +1,4 @@
-{{define "albums"}}
+{{define "ablums"}}
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,12 +11,8 @@
     </head>
     <body>
         {{template "header"}}
-        {{range .Results}}
-            <div>
-                <a href="/album?a={{.Id}}">{{.Title}}</a>
-            </div>
-        {{end}}
-        {{template "footer"}}
+
+        {{tempalte "footer"}}
     </body>
 </html>
 {{end}}

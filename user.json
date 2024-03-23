@@ -1,38 +1,9 @@
-{
-    "Users": [
-        {
-            "username": "Faaab",
-            "password": "lolilol",
-            "favorite_tracks": [
-                    {
-                        "id": 72083519,
-                        "title": "Blazing Star",
-                        "link": "http://www.deezer.com/track/72083519",
-                        "release_date": "2015-02-20",
-                        "album": {
-                            "id": 7081882,
-                            "title": "The Doomstar Requiem: A Klok Opera Soundtrack",
-                            "cover": "http://api.deezer.com/album/7081882/image",
-                            "tracklist": "http://api.deezer.com/album/7081882/tracks",
-                            "artist": {
-                                "id": 0,
-                                "name": "",
-                                "picture": "",
-                                "nb_album": 0,
-                                "tracklist": ""
-                            }
-                        },
-                        "artist": {
-                            "id": 5314430,
-                            "name": "Metalocalypse \u0026 Dethklok",
-                            "picture": "http://api.deezer.com/artist/5314430/image",
-                            "nb_album": 0,
-                            "tracklist": "http://api.deezer.com/artist/5314430/top?limit=50"
-                        }
-                    }
-            ],
-            "favorite_artists": [],
-            "favorite_albums": []
-        }
-    ]
+{"users":[{
+    "password": "admin",
+    "username": "zero",
+    "favorite_tracks": [],
+    "favorite_artists": [],
+    "favorite_albums": []
+    }
+]
 }
