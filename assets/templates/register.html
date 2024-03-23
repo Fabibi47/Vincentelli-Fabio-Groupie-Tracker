@@ -14,8 +14,8 @@
             {{if eq .Err "alreadyUsed"}}
                 <p class="error">Nom déjà utilisé</p>
             {{end}}
-            <input type="text" name="username">
-            <input type="password" name="password">
+            <input type="text" name="username" required>
+            <input type="password" name="password" required>
             <input type="submit">
         </form>
         {{template "footer"}}

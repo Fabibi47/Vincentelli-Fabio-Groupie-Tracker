@@ -11,19 +11,19 @@
     <body>
         {{template "header"}}
         {{if eq .Filter "artists"}}
-            {{range .Results}}
+            {{range .Data.Results}}
                 <div>
                     <h1><a href="/artist?a={{.Id}}">{{.Title}}</a></h1>
                 </div>
             {{end}}
         {{else if eq .Filter "album"}}
-            {{range .Results}}
+            {{range .Data.Results}}
                 <div>
                     <h1><a href="/album?a={{.Id}}">{{.Title}}</a></h1>
                 </div>
             {{end}}
         {{else}}
-            {{range .Results}}
+            {{range .Data.Results}}
                 <div>
                     <h1><a href="/track?t={{.Id}}">{{.Title}}</a></h1>
                     <p>{{.Artist.Name}}</p>
@@ -31,6 +31,12 @@
                 </div>
             {{end}}
         {{end}}
+
+        <a href="/result?filter={{.Filter}}&search={{.Search}}&page=0">Première</a>
+        <a href="/result?filter={{.Filter}}&search={{.Search}}&page={{.PagePrec}}">Précédente</a>
+        <a href="/result?filter={{.Filter}}&search={{.Search}}&page={{.PageSuiv}}">Suivante</a>
+        <a href="/result?filter={{.Filter}}&search={{.Search}}&page={{.LastPage}}">Dernière</a>
+
         {{template "footer"}}
     </body>
 </html>

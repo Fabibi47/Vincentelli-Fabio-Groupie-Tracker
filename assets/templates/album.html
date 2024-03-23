@@ -11,11 +11,11 @@
     <body>
         {{template "header"}}
             <h1>{{.Result.Title}}</h1>
+            <p><a hre="/artist?a={{.Result.Artist.Id}}">{{.Result.Artist.Name}}</a></p>
             <a href="/AddToFav/Album?a={{.Result.Id}}">Ajouter aux favoris</a>
-            <p>{{.Result.Artist}}</p>
-            {{range .Result.TrackList}}
+            {{range .Tracklist.Tracks}}
             <div>
-                <a href="/track?track={{.Id}}"><h3>{{.Title}}</h3></a>
+                <a href="/track?t={{.Id}}"><h3>{{.Title}}</h3></a>
             </div>
             {{end}}
         {{template "footer"}}

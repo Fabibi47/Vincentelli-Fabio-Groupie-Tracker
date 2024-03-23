@@ -37,7 +37,7 @@ type Album struct {
 	Id        int    `json:"id"`
 	Title     string `json:"title"`
 	Cover     string `json:"cover"`
-	Tracklist string `json:"tracklist"`
+	TrackList string `json:"tracklist"`
 	Artist    Artist `json:"artist"`
 }
 
@@ -60,7 +60,7 @@ type Artists struct {
 }
 
 func main() {
-	IsConnected := false
+	IsConnected := "false"
 	temp, err := template.ParseGlob("assets/templates/*.html")
 	if err != nil {
 		fmt.Println("Erreur dans la récupération des templates : ", err)
@@ -72,7 +72,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		var Data struct {
 			User      User
-			Connected bool
+			Connected string
 		}
 
 		Data.User = CurrentUser
@@ -81,14 +81,14 @@ func main() {
 	})
 
 	http.HandleFunc("/tracks", func(w http.ResponseWriter, r *http.Request) {
-		api_url := "http://api.deezer.com/search/track/?q=Dethklok"
+		api_url := "http://api.deezer.com/search/track/?q=Dethklok&limit=10"
 
 		httpClient := http.Client{
 			Timeout: time.Second * 2,
 		}
 		req, errReq := http.NewRequest(http.MethodGet, api_url, nil)
 		if errReq != nil {
-			fmt.Println("Problème danss la requête d'obtention des tracks : ", errReq)
+			fmt.Println("Problème dans la requête d'obtention des tracks : ", errReq)
 		}
 
 		res, errRes := httpClient.Do(req)
@@ -109,7 +109,7 @@ func main() {
 		var Data struct {
 			Results   []Track
 			User      User
-			Connected bool
+			Connected string
 		}
 		for i := 0; i < len(decodeData.Items); i++ {
 			Data.Results = append(Data.Results, decodeData.Items[i])
@@ -155,14 +155,14 @@ func main() {
 			Result     Track
 			User       User
 			AlreadyFav bool
-			Connected  bool
+			Connected  string
 		}
 
 		Data.Result = DecodeData
 		Data.User = CurrentUser
 		Data.AlreadyFav = false
 		Data.Connected = IsConnected
-		if IsConnected {
+		if IsConnected == "true" {
 			for i := 0; i < len(CurrentUser.FavoriteTracks); i++ {
 				if id == CurrentUser.FavoriteTracks[i].Id {
 					Data.AlreadyFav = true
@@ -177,7 +177,7 @@ func main() {
 
 		id, _ := strconv.Atoi(url)
 
-		if IsConnected {
+		if IsConnected == "true" {
 			for i := 0; i < len(CurrentUser.FavoriteTracks); i++ {
 				if id == CurrentUser.FavoriteTracks[i].Id {
 					http.Redirect(w, r, "/track?t="+url, http.StatusSeeOther)
@@ -247,7 +247,7 @@ func main() {
 
 		id, _ := strconv.Atoi(url)
 
-		if IsConnected {
+		if IsConnected == "true" {
 			for i := 0; i < len(CurrentUser.FavoriteAlbums); i++ {
 				if id == CurrentUser.FavoriteAlbums[i].Id {
 					http.Redirect(w, r, "/album?a="+url, http.StatusSeeOther)
@@ -316,7 +316,7 @@ func main() {
 
 		id, _ := strconv.Atoi(url)
 
-		if IsConnected {
+		if IsConnected == "true" {
 			for i := 0; i < len(CurrentUser.FavoriteArtists); i++ {
 				if id == CurrentUser.FavoriteArtists[i].Id {
 					http.Redirect(w, r, "/artist?a="+url, http.StatusSeeOther)
@@ -412,13 +412,40 @@ func main() {
 		var DecodeData Album
 		json.Unmarshal(body, &DecodeData)
 
+		var Tracklist struct {
+			Tracks []Track `json:"data"`
+		}
+
+		trackReq, errReq := http.NewRequest(http.MethodGet, DecodeData.TrackList, nil)
+		if errReq != nil {
+			fmt.Println("Erreur dans le toaster! Problème dans la requête pour la trackilst : ", errReq)
+		}
+
+		trackRes, errRes := httpClient.Do(trackReq)
+		if res.Body != nil {
+			defer res.Body.Close()
+		} else {
+			fmt.Println("Erreur dans le toaster! Problème dans l'envoi de la requête pour la trackilst : ", errRes)
+		}
+
+		trackBody, errBody := io.ReadAll(trackRes.Body)
+		if errBody != nil {
+			fmt.Println("Erreur dans le toaster! Problème dans la lecture du body de la réponse de la tracklist : ", errBody)
+		}
+
+		json.Unmarshal(trackBody, &Tracklist)
+
 		var Data struct {
 			Result    Album
+			Tracklist struct {
+				Tracks []Track `json:"data"`
+			}
 			User      User
-			Connected bool
+			Connected string
 		}
 
 		Data.Result = DecodeData
+		Data.Tracklist = Tracklist
 		Data.User = CurrentUser
 		Data.Connected = IsConnected
 
@@ -454,15 +481,42 @@ func main() {
 		var DecodeData Artist
 		json.Unmarshal(body, &DecodeData)
 
+		var Tracklist struct {
+			Tracks []Track
+		}
+
+		trackReq, errReq := http.NewRequest(http.MethodGet, DecodeData.TrackList, nil)
+		if errReq != nil {
+			fmt.Println("Erreur dans le toaster! Problème dans la requête pour la trackilst : ", errReq)
+		}
+
+		trackRes, errRes := httpClient.Do(trackReq)
+		if res.Body != nil {
+			defer res.Body.Close()
+		} else {
+			fmt.Println("Erreur dans le toaster! Problème dans l'envoi de la requête pour la trackilst : ", errRes)
+		}
+
+		trackBody, errBody := io.ReadAll(trackRes.Body)
+		if errBody != nil {
+			fmt.Println("Erreur dans le toaster! Problème dans la lecture du body de la réponse de la tracklist : ", errBody)
+		}
+
+		json.Unmarshal(trackBody, &Tracklist)
+
 		var Data struct {
 			Result    Artist
+			TrackList struct {
+				Tracks []Track
+			}
 			User      User
-			Connected bool
+			Connected string
 		}
 
 		Data.Result = DecodeData
 		Data.User = CurrentUser
 		Data.Connected = IsConnected
+		Data.TrackList = Tracklist
 
 		temp.ExecuteTemplate(w, "artist", Data)
 	})
@@ -495,7 +549,7 @@ func main() {
 		var Data struct {
 			Results   []Artist
 			User      User
-			Connected bool
+			Connected string
 		}
 		for i := 0; i < len(decodeData.Items); i++ {
 			Data.Results = append(Data.Results, decodeData.Items[i])
@@ -535,7 +589,7 @@ func main() {
 		var Data struct {
 			Results   []Album
 			User      User
-			Connected bool
+			Connected string
 		}
 		for i := 0; i < len(decodeData.Items); i++ {
 			Data.Results = append(Data.Results, decodeData.Items[i])
@@ -549,7 +603,7 @@ func main() {
 	http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
 		var Data struct {
 			User      User
-			Connected bool
+			Connected string
 		}
 
 		Data.User = CurrentUser
@@ -559,9 +613,13 @@ func main() {
 	})
 
 	http.HandleFunc("/result", func(w http.ResponseWriter, r *http.Request) {
-		filter := r.PostFormValue("filter")
-		research := r.PostFormValue("search")
-		api_url := "http://api.deezer.com/search" + filter + "?q=" + research
+		research := r.URL.Query().Get("search")
+		filter := r.URL.Query().Get("filter")
+		api_url := "http://api.deezer.com/search/" + filter + "?q=" + research
+
+		page := r.URL.Query().Get("page")
+
+		ipage, _ := strconv.Atoi(page)
 
 		httpClient := http.Client{
 			Timeout: time.Second * 2,
@@ -583,69 +641,149 @@ func main() {
 			fmt.Println("Erreur dans la lecture de la réponse de recherche : ", errBody)
 		}
 
-		decodeTrack := Tracks{}
-		decodeArtist := Artists{}
-		decodeAlbum := Albums{}
-
 		var DataTrack struct {
-			Results   []Track
-			User      User
-			Filter    string
-			Connected bool
+			Results []Track `json:"data"`
 		}
 		var DataAlbum struct {
-			Results   []Album
-			User      User
-			Filter    string
-			Connected bool
+			Results []Album `json:"data"`
 		}
 		var DataArtist struct {
-			Results   []Artist
-			User      User
-			Filter    string
-			Connected bool
+			Results []Artist `json:"data"`
 		}
 
 		if filter == "artists" {
-			json.Unmarshal(body, &decodeArtist)
+			json.Unmarshal(body, &DataArtist)
 
-			for i := 0; i < len(decodeArtist.Items); i++ {
-				DataArtist.Results = append(DataArtist.Results, decodeArtist.Items[i])
+			var Data struct {
+				Data struct {
+					Results []Artist
+				}
+				User      User
+				Connected string
+				Page      int
+				PageSuiv  int
+				PagePrec  int
+				LastPage  int
+				Filter    string
+				Search    string
 			}
-			DataArtist.User = CurrentUser
-			DataArtist.Filter = "artist"
-			DataArtist.Connected = IsConnected
+			Data.Connected = IsConnected
+			Data.Page = ipage
+			Data.Search = research
+			Data.Filter = filter
+			Data.LastPage = len(DataArtist.Results) / 10
+			if len(DataArtist.Results) > ipage*10 {
+				Data.PageSuiv = Data.Page + 1
+			} else {
+				Data.PageSuiv = Data.Page
+			}
+			if ipage == 0 {
+				if len(DataArtist.Results) >= 9 {
+					Data.Data.Results = DataArtist.Results[:10]
+				} else {
+					Data.Data.Results = DataArtist.Results
+				}
+				Data.PagePrec = 0
+			} else {
+				if len(DataArtist.Results) >= ipage*10+10 {
+					Data.Data.Results = DataArtist.Results[ipage*10 : ipage*10+10]
+				} else {
+					Data.Data.Results = DataArtist.Results[ipage*10:]
+				}
+				Data.PagePrec = Data.Page - 1
+			}
 
-			temp.ExecuteTemplate(w, "result", DataArtist)
+			temp.ExecuteTemplate(w, "result", Data)
 		} else if filter == "album" {
-			json.Unmarshal(body, &decodeAlbum)
+			json.Unmarshal(body, &DataAlbum)
 
-			for i := 0; i < len(decodeAlbum.Items); i++ {
-				DataAlbum.Results = append(DataAlbum.Results, decodeAlbum.Items[i])
+			var Data struct {
+				Data struct {
+					Results []Album
+				}
+				User      User
+				Connected string
+				Page      int
+				PageSuiv  int
+				PagePrec  int
+				LastPage  int
+				Filter    string
+				Search    string
 			}
-			DataAlbum.User = CurrentUser
-			DataAlbum.Filter = "album"
-			DataAlbum.Connected = IsConnected
+			Data.Connected = IsConnected
+			Data.Page = ipage
+			Data.Search = research
+			Data.Filter = filter
+			Data.LastPage = len(DataAlbum.Results) / 10
+			if len(DataAlbum.Results) > ipage*10 {
+				Data.PageSuiv = Data.Page + 1
+			}
+			if ipage == 0 {
+				if len(DataAlbum.Results) >= 9 {
+					Data.Data.Results = DataAlbum.Results[:10]
+				} else {
+					Data.Data.Results = DataAlbum.Results
+				}
+				Data.PagePrec = 0
+			} else {
+				if len(DataArtist.Results) >= ipage*10+10 {
+					Data.Data.Results = DataAlbum.Results[ipage*10 : ipage*10+10]
+					Data.PagePrec = Data.Page - 1
+				} else {
+					Data.Data.Results = DataAlbum.Results[ipage*10:]
+				}
+			}
 
-			temp.ExecuteTemplate(w, "result", DataAlbum)
+			temp.ExecuteTemplate(w, "result", Data)
 		} else {
-			json.Unmarshal(body, &decodeTrack)
+			json.Unmarshal(body, &DataTrack)
 
-			for i := 0; i < len(decodeTrack.Items); i++ {
-				DataTrack.Results = append(DataTrack.Results, decodeTrack.Items[i])
+			fmt.Println("passed")
+			var Data struct {
+				Data struct {
+					Results []Track
+				}
+				User      User
+				Connected string
+				Page      int
+				PageSuiv  int
+				PagePrec  int
+				LastPage  int
+				Filter    string
+				Search    string
 			}
-			DataTrack.User = CurrentUser
-			DataTrack.Filter = "track"
-			DataTrack.Connected = IsConnected
+			Data.Connected = IsConnected
+			Data.Page = ipage
+			Data.Filter = filter
+			Data.Search = research
+			Data.LastPage = len(DataTrack.Results) / 10
+			if len(DataTrack.Results) > ipage*10 {
+				Data.PageSuiv = Data.Page + 1
+			}
+			if ipage == 0 {
+				if len(DataTrack.Results) >= 9 {
+					Data.Data.Results = DataTrack.Results[:10]
+				} else {
+					Data.Data.Results = DataTrack.Results
+				}
+				Data.PagePrec = 0
+			} else {
+				if len(DataTrack.Results) >= ipage*10+10 {
+					Data.Data.Results = DataTrack.Results[ipage*10 : ipage*10+10]
+				} else {
+					Data.Data.Results = DataTrack.Results[ipage*10:]
+				}
+				Data.PagePrec = Data.Page - 1
+			}
 
-			temp.ExecuteTemplate(w, "result", DataTrack)
+			temp.ExecuteTemplate(w, "result", Data)
 		}
 	})
 
 	http.HandleFunc("/a_propos", func(w http.ResponseWriter, r *http.Request) {
 		var Data struct {
 			User      User
-			Connected bool
+			Connected string
 		}
 
 		Data.User = CurrentUser
@@ -657,7 +795,7 @@ func main() {
 	http.HandleFunc("/favorites", func(w http.ResponseWriter, r *http.Request) {
 		var Data struct {
 			User      User
-			Connected bool
+			Connected string
 		}
 
 		Data.User = CurrentUser
@@ -665,20 +803,20 @@ func main() {
 
 		fmt.Println(IsConnected)
 
-		if IsConnected {
+		if IsConnected == "true" {
 			temp.ExecuteTemplate(w, "favoris", Data)
 		}
-		temp.ExecuteTemplate(w, "connect", Data)
+		http.Redirect(w, r, "/connect", http.StatusSeeOther)
 	})
 
 	http.HandleFunc("/connect", func(w http.ResponseWriter, r *http.Request) {
-		if IsConnected {
+		if IsConnected == "true" {
 			http.Redirect(w, r, "/", http.StatusForbidden)
 		} else {
 			type Error struct {
 				Err       string
 				User      User
-				Connected bool
+				Connected string
 			}
 			url := r.URL.RawQuery
 			switch url {
@@ -747,7 +885,7 @@ func main() {
 		} else if !exists {
 			http.Redirect(w, r, "/connect?err=not_exists", http.StatusSeeOther)
 		} else {
-			IsConnected = true
+			IsConnected = "true"
 			CurrentUser = User{
 				UserName:        name,
 				Password:        pwd,
@@ -761,14 +899,14 @@ func main() {
 	})
 
 	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
-		if IsConnected {
+		if IsConnected == "true" {
 			http.Redirect(w, r, "/", http.StatusForbidden)
 		} else {
 			url := r.URL.RawQuery
 			var Data struct {
 				Err       string
 				User      User
-				Connected bool
+				Connected string
 			}
 
 			if url == "err=alreadyUsed" {
@@ -839,7 +977,7 @@ func main() {
 			FavoriteArtists: []Artist{},
 		}
 
-		IsConnected = false
+		IsConnected = "false"
 
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	})

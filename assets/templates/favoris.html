@@ -15,13 +15,14 @@
             <div>
                 <h3><a href="/track?t={{.Id}}">{{.Title}}</a></h3>
                 <p><a href="/album?a={{.Album.Id}}">{{.Album.Title}}</a></p>
-                <p><a href="/artist?a={{.Artiste.Id}}">{{.Artiste.Name}}</a></p>
+                <p><a href="/artist?a={{.Artist.Id}}">{{.Artist.Name}}</a></p>
             </div>
         {{end}}
         <h1>Albums</h1>
         {{range .User.FavoriteAlbums}}
             <div>
                 <h3><a href="/album?a={{.Id}}">{{.Title}}</a></h3>
+                <p><a href="artist?a={{.Artist.Id}}">{{.Artist.Name}}</a></p>
             </div>
         {{end}}
         <h1>Artistes</h1>

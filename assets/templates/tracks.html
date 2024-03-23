@@ -12,7 +12,7 @@
         {{range .Results}}
             <div>
                 <a href="/track?t={{.Id}}"><h1>{{.Title}}</h1></a>
-                <a href="/album?a={{.Album.Link}}"><p>{{.Album.Title}}</p></a>
+                <a href="/album?a={{.Album.Id}}"><p>{{.Album.Title}}</p></a>
             </div>
         {{end}}
         {{template "footer"}}

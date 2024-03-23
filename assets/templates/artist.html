@@ -1,4 +1,4 @@
-{{define "album"}}
+{{define "artist"}}
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,9 +12,10 @@
         {{template "header"}}
             <h1>{{.Result.Name}}</h1>
             <a href="/AddToFav/Artist?a={{.Result.Id}}">Ajouter aux favoris</a>
-            {{range .Result.TrackList}}
+            {{range .TrackList.Tracks}}
             <div>
-                <a href="/track?track={{.Id}}"><h3>{{.Title}}</h3></a>
+                <a href="/track?t={{.Id}}"><h3>{{.Title}}</h3></a>
+                <a href="/album?a={{.Album.Id}}">{{.Album.Title}}</a>
             </div>
             {{end}}
         {{template "footer"}}
