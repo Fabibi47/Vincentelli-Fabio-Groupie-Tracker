@@ -36,7 +36,6 @@ type Track struct {
 type Album struct {
 	Id        int    `json:"id"`
 	Title     string `json:"title"`
-	Cover     string `json:"cover"`
 	TrackList string `json:"tracklist"`
 	Artist    Artist `json:"artist"`
 }
@@ -49,7 +48,6 @@ type Albums struct {
 type Artist struct {
 	Id        int    `json:"id"`
 	Name      string `json:"name"`
-	Picture   string `json:"picture"`
 	Nb_albums int    `json:"nb_album"`
 	TrackList string `json:"tracklist"`
 }
