@@ -1,0 +1,7 @@
+.albums_a {
+    color: blueviolet;
+}
+
+.albums_a:hover {
+    color: #fff;
+}

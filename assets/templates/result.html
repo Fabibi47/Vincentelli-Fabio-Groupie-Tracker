@@ -6,36 +6,36 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Recherche</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="/assets/css/result.css">
     </head>
     <body>
         {{template "header"}}
         {{if eq .Filter "artists"}}
             {{range .Data.Results}}
                 <div>
-                    <h1><a href="/artist?a={{.Id}}">{{.Title}}</a></h1>
+                    <h1><a href="/artist?a={{.Id}}" class="result_a">{{.Title}}</a></h1>
                 </div>
             {{end}}
         {{else if eq .Filter "album"}}
             {{range .Data.Results}}
                 <div>
-                    <h1><a href="/album?a={{.Id}}">{{.Title}}</a></h1>
+                    <h1><a href="/album?a={{.Id}}" class="result_a">{{.Title}}</a></h1>
                 </div>
             {{end}}
         {{else}}
             {{range .Data.Results}}
                 <div>
-                    <h1><a href="/track?t={{.Id}}">{{.Title}}</a></h1>
-                    <p>{{.Artist.Name}}</p>
-                    <p>{{.Album.Title}}</p>
+                    <h1><a href="/track?t={{.Id}}" class="result_a">{{.Title}}</a></h1>
+                    <p class="result">{{.Artist.Name}}</p>
+                    <p class="result">{{.Album.Title}}</p>
                 </div>
             {{end}}
         {{end}}
 
-        <a href="/result?filter={{.Filter}}&search={{.Search}}&page=0">Première</a>
-        <a href="/result?filter={{.Filter}}&search={{.Search}}&page={{.PagePrec}}">Précédente</a>
-        <a href="/result?filter={{.Filter}}&search={{.Search}}&page={{.PageSuiv}}">Suivante</a>
-        <a href="/result?filter={{.Filter}}&search={{.Search}}&page={{.LastPage}}">Dernière</a>
+        <a href="/result?filter={{.Filter}}&search={{.Search}}&page=0" class="result_a">Première</a>
+        <a href="/result?filter={{.Filter}}&search={{.Search}}&page={{.PagePrec}}" class="result_a">Précédente</a>
+        <a href="/result?filter={{.Filter}}&search={{.Search}}&page={{.PageSuiv}}" class="result_a">Suivante</a>
+        <a href="/result?filter={{.Filter}}&search={{.Search}}&page={{.LastPage}}" class="result_a">Dernière</a>
 
         {{template "footer"}}
     </body>

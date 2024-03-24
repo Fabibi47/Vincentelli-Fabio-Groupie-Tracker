@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -209,7 +210,6 @@ func main() {
 			json.Unmarshal(body, &DecodeData)
 
 			CurrentUser.FavoriteTracks = append(CurrentUser.FavoriteTracks, DecodeData)
-			fmt.Println(CurrentUser.FavoriteTracks)
 			Json, err := os.ReadFile("./user.json")
 			if err != nil {
 				fmt.Println("Erreur dans le toaster ! Problème dans la lecture du fichier user.json : ", err)
@@ -348,7 +348,6 @@ func main() {
 			json.Unmarshal(body, &DecodeData)
 
 			CurrentUser.FavoriteArtists = append(CurrentUser.FavoriteArtists, DecodeData)
-			fmt.Println(CurrentUser.FavoriteArtists)
 			Json, err := os.ReadFile("./user.json")
 			if err != nil {
 				fmt.Println("Erreur dans le toaster ! Problème dans la lecture du fichier user.json : ", err)
@@ -611,7 +610,7 @@ func main() {
 	})
 
 	http.HandleFunc("/result", func(w http.ResponseWriter, r *http.Request) {
-		research := r.URL.Query().Get("search")
+		research := strings.ReplaceAll(r.URL.Query().Get("search"), " ", "+")
 		filter := r.URL.Query().Get("filter")
 		api_url := "http://api.deezer.com/search/" + filter + "?q=" + research
 
@@ -670,7 +669,7 @@ func main() {
 			Data.Search = research
 			Data.Filter = filter
 			Data.LastPage = len(DataArtist.Results) / 10
-			if len(DataArtist.Results) > ipage*10 {
+			if len(DataArtist.Results) > (ipage+1)*10 {
 				Data.PageSuiv = Data.Page + 1
 			} else {
 				Data.PageSuiv = Data.Page
@@ -736,7 +735,6 @@ func main() {
 		} else {
 			json.Unmarshal(body, &DataTrack)
 
-			fmt.Println("passed")
 			var Data struct {
 				Data struct {
 					Results []Track
@@ -798,8 +796,6 @@ func main() {
 
 		Data.User = CurrentUser
 		Data.Connected = IsConnected
-
-		fmt.Println(IsConnected)
 
 		if IsConnected == "true" {
 			temp.ExecuteTemplate(w, "favoris", Data)

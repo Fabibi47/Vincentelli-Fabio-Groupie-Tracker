@@ -6,16 +6,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="/assets/css/artist.css">
     </head>
     <body>
         {{template "header"}}
             <h1>{{.Result.Name}}</h1>
-            <a href="/AddToFav/Artist?a={{.Result.Id}}">Ajouter aux favoris</a>
+            <a class="artist_a" href="/AddToFav/Artist?a={{.Result.Id}}">Ajouter aux favoris</a>
             {{range .TrackList.Tracks}}
             <div>
-                <a href="/track?t={{.Id}}"><h3>{{.Title}}</h3></a>
-                <a href="/album?a={{.Album.Id}}">{{.Album.Title}}</a>
+                <a class="artist_a" href="/track?t={{.Id}}"><h3>{{.Title}}</h3></a>
+                <a class="artist_a" href="/album?a={{.Album.Id}}">{{.Album.Title}}</a>
             </div>
             {{end}}
         {{template "footer"}}

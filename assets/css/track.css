@@ -1,0 +1,11 @@
+.track {
+    color: #fff;
+}
+
+.track_a {
+    color: blueviolet;
+}
+
+.track:hover {
+    color: #fff;
+}

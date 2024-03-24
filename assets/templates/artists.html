@@ -6,13 +6,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Artists</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="/assets/css/artists.css">
     </head>
     <body>
         {{template "header"}}
         {{range .Results}}
             <div>
-                <a href="/artist?a={{.Id}}">{{.Name}}</a>
+                <a class="artists_a" href="/artist?a={{.Id}}">{{.Name}}</a>
             </div>
         {{end}}
         {{template "footer"}}

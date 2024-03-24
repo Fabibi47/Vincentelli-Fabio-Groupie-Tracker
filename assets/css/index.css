@@ -1,0 +1,22 @@
+
+.index {
+    margin-top: 10%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.index_a {
+    color: black;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 20%;
+    background-color: #7f0cbd;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.index_a:hover {
+    background-color: #fff;
+}

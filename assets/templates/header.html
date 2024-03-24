@@ -6,20 +6,34 @@
         <link rel="stylesheet" href="/assets/css/header.css">
     </head>
     <body>
-        <a href="/favorites">Vos Favoris</a>
-        <li><a>Catégories</a>
-            <ul>
-                <li><a href="/tracks">Tracks</a></li>
-                <li><a href="/albums">Albums</a></li>
-                <li><a href="/artists">Artistes</a></li>
-            </ul>
-        </li>
-        <h>Reezer</h>
-        {{if eq .Connected true}}
-            <a href="/deconnect">Vous déconnecter</a>
-        {{else}}
-            <a href="/connect">Vous connecter</a>
-        {{end}}
+        
+        
+        <div class="categorie">
+            <div class="choix">
+                
+                <p>Catégories : </p>
+                <a href="/tracks" class="choix_categorie">Tracks</a>
+                <a href="/albums" class="choix_categorie">Albums</a>
+                <a href="/artists" class="choix_categorie">Artistes</a>
+            </div>
+            
+    
+            <a href="/"class="casque">
+        
+                <div class="cercle_gauche"><p>.</p></div>
+                <div class="branche"><h1>ReeZer</h1></div>
+                <div class="cercle_droit"><p>.</p></div>
+            </a>
+            
+            <a href="/favorites" class="Fav">Vos Favoris ❤️​</a>
+            {{if eq .Connected true}}
+                <a href="/deconnect" class="connectOrNo">Vous déconnecter</a>
+            {{else}}
+                <a href="/connect" class="connectOrNo">Vous connecter</a>
+            {{end}}
+        </div>
+        
+        
     </body>
 </html>
 {{end}}

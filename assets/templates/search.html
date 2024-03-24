@@ -6,10 +6,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Recherche</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="/assets/css/search.css">
     </head>
     <body>
         {{template "header"}}
+        <div class="result">
+
             <form action="/result" method="GET">
                 <input type="text" placeholder="Search" id="search" name="search">
                 <label for="track">Tracks</label>
@@ -20,8 +22,9 @@
                 <input type="radio" name="filter" value="artists" id="artists">
 
                 <input type="checkbox" name="page" value="0" id="page" hidden checked>
-                <input type="submit">
+                <input type="submit" class="button2">
             </form>
+        </div>
         {{template "footer"}}
     </body>
 </html>

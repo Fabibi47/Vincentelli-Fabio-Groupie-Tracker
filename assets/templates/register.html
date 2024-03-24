@@ -10,14 +10,22 @@
     </head>
     <body>
         {{template "header"}}
-        <form action="/registerHandler" method="post">
-            {{if eq .Err "alreadyUsed"}}
-                <p class="error">Nom déjà utilisé</p>
-            {{end}}
-            <input type="text" name="username" required>
-            <input type="password" name="password" required>
-            <input type="submit">
-        </form>
+        <div class="form">
+
+            <div class="support2">
+    
+                <form action="/registerHandler" method="post">
+                    {{if eq .Err "alreadyUsed"}}
+                        <p class="error">Nom déjà utilisé</p>
+                    {{end}}
+                    <label for="username">Nom :</label>
+                    <input type="text" name="username">
+                    <label>mot de passe :</label>
+                    <input type="password" name="password">
+                    <input type="submit" value="Create" class="button">
+                </form>
+            </div>
+        </div>
         {{template "footer"}}
     </body>
 </html>

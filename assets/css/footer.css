@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.footer {
+    background-color: #181818;
+    border-top: 3px solid black;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-top: 10%;
+}
+
+.propo {
+    color: black;
+    background-color: #d102ff;
+    border-radius: 20px;
+    padding: 4px;
+
+}
+
+.propo:hover {
+    background-color: #fff;
+}
+
+.site {
+    font-family: "Sacramento", sans-serif;
+    color: #fff;
+}

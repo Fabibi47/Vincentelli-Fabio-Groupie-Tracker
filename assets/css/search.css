@@ -1,0 +1,42 @@
+.result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    padding: 10px;
+    
+}
+
+form {
+    background-color: #1f2020;
+    border: 3px black inset;
+    padding: 10px;
+    gap: 2%;
+    width: 50%;
+    display: flex;
+    text-align: center;
+    color: #a200ff;
+    font-family: "Sacramento", sans-serif;
+    font-weight: bold;
+}
+
+input {
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+.button2 {
+    background-color: #8800ff;
+    text-align: center;
+    font-weight: bold;
+
+    padding: 5px;
+    border-top-left-radius: 10px;
+}
+
+.button2:hover {
+    background-color:  #fff;
+}

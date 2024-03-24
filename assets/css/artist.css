@@ -1,0 +1,7 @@
+.artist_a {
+    color: blueviolet;
+}
+
+.artist_a:hover {
+    color: #fff;
+}

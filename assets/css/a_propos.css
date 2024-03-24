@@ -1,0 +1,13 @@
+body {
+    font-family: "Sacramento", sans-serif;
+    background-color: #131212;
+}
+
+p {
+    color: purple;
+    text-align: center;
+}
+
+.aPropoTitre {
+    color: #fff;
+}

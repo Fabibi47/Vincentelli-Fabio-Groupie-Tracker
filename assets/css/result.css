@@ -1,0 +1,11 @@
+.result {
+    color: #fff;
+}
+
+.result_a {
+    color: blueviolet;
+}
+
+.result_a:hover {
+    color: #fff;
+}

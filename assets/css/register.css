@@ -44,10 +44,6 @@ label {
     margin-top: 3%;
 }
 
-.error {
-    color: red;
-}
-
 p {
     color: #bb01f9;
 }
@@ -74,4 +70,8 @@ a {
 
 .button:hover {
     background-color: #fff;
+}
+
+.error {
+    color: red;
 }
